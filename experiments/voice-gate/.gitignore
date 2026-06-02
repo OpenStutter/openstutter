@@ -1,0 +1,7 @@
+# Voice-gate scratch area — keep models, audio, and venv out of git
+.venv/
+out/
+*.wav
+*.mp3
+*.flac
+__pycache__/
