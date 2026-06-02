@@ -11,7 +11,7 @@
 > ⚠️ **Status: design phase.** No production code yet.
 
 OpenStutter takes whatever speech signal you can produce — fluent words, disfluent words,
-partial sounds, or *silently lip-synced* words — and delivers fluent speech in your **own
+partial sounds, or _silently lip-synced_ words — and delivers fluent speech in your **own
 cloned voice** through a virtual microphone, so any app (Slack, Zoom, Loom, QuickTime…)
 receives clean audio. Everything runs on-device.
 
@@ -22,9 +22,11 @@ setbacks in my professional life due to my stuttering problem. It feels so bad w
 teammates look away during a standup and an interviewer rejects you just because you don't
 speak fluently. People don't take your ideas very seriously maybe because its hard to focus
 on something when the speech has too many hiccups.
+
 This is my attempt to build an AI that can help ease speaking over video calls. This is going
 to be an always free software for people who stutter. I'm willing to personally set things up
-for my friends at communities like */r/Stutter*.
+for my friends at communities like _/r/Stutter_.
+
 I will be giving an update on the progress very soon.
 
 ## Pipeline / flow
@@ -94,10 +96,7 @@ flowchart TD
     class Speak choke
 ```
 
-
-
 ### Runtime / library legend
-
 
 | Color     | Runtime / library                           | Used for                                                      |
 | --------- | ------------------------------------------- | ------------------------------------------------------------- |
@@ -105,25 +104,24 @@ flowchart TD
 | 🟧 orange | **PyTorch + MPS**                           | TTS + voice clone (Chatterbox primary · Qwen3-TTS A/B)        |
 | 🟩 green  | **Standalone C/C++ + Metal**                | whisper.cpp (STT) · BlackHole (virtual mic)                   |
 | 🟨 yellow | **MediaPipe** (own runtime)                 | Face Landmarker — 478 landmarks + 52 blendshapes              |
-| ⬜ grey    | **Python** (numpy / scipy / sklearn / glue) | DSP features · block classifier · DTW matcher · orchestration |
-| 🔴 border | `**speak_text(text)` chokepoint**           | The single function every committed-text path flows through   |
-
+| ⬜ grey   | **Python** (numpy / scipy / sklearn / glue) | DSP features · block classifier · DTW matcher · orchestration |
+| 🔴 border | `**speak_text(text)` chokepoint\*\*         | The single function every committed-text path flows through   |
 
 ### Two interaction modes
 
 - **Default speech mode** (always-on, camera required). You speak; whisper.cpp transcribes;
-the multimodal block detector (acoustic + vision + linguistic) decides *wait vs relay*.
-Block detected → delay. Sentence complete → commit through `speak_text()`.
+  the multimodal block detector (acoustic + vision + linguistic) decides _wait vs relay_.
+  Block detected → delay. Sentence complete → commit through `speak_text()`.
 - **Lip-sync escape mode** (user-toggled, camera required). You deliberately silently mouth
-a feared word; DTW matches your lip trajectory against per-user templates; candidates are
-reranked by context LLM + any partial audio/letters; you pick (1–9 / Enter); `speak_text()`
-speaks it in your cloned voice.
-- **Push-to-talk** is *always* available as a manual override **and** as the **camera-free
-baseline** for users without a camera.
+  a feared word; DTW matches your lip trajectory against per-user templates; candidates are
+  reranked by context LLM + any partial audio/letters; you pick (1–9 / Enter); `speak_text()`
+  speaks it in your cloned voice.
+- **Push-to-talk** is _always_ available as a manual override **and** as the **camera-free
+  baseline** for users without a camera.
 
 ## Documentation
 
-*Still in works*
+_Still in works_
 
 ## License
 
